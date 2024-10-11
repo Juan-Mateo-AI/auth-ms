@@ -6,8 +6,8 @@ import * as argon2 from "argon2";
 
 import { LoginUserDto, RegisterUserDto } from "./dto";
 import { JwtService } from "@nestjs/jwt";
-import { JwtPayload } from "./interfaces/jwt-payload.interface";
 import { envs } from "src/config";
+import { JwtPayload } from "./interfaces/jwt-payload.interface";
 
 @Injectable()
 export class AuthService extends PrismaClient implements OnModuleInit {
@@ -99,7 +99,7 @@ export class AuthService extends PrismaClient implements OnModuleInit {
         });
       }
 
-      const isPasswordValid = await argon2.verify(password, user.password);
+      const isPasswordValid = await argon2.verify(user.password, password);
 
       if (!isPasswordValid) {
         throw new RpcException({
