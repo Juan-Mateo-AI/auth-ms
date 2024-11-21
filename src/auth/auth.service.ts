@@ -37,7 +37,6 @@ export class AuthService extends PrismaClient implements OnModuleInit {
         token: await this.signJWT(user),
       };
     } catch (error) {
-      console.log(error);
       throw new RpcException({
         status: 401,
         message: "Invalid token",
