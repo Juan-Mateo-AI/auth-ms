@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 
 import * as argon2 from "argon2";
 
-import { LoginUserDto, RegisterUserDto } from "./dto";
+import { DeleteUserDto, LoginUserDto, RegisterUserDto } from "./dto";
 import { JwtService } from "@nestjs/jwt";
 import { envs } from "src/config";
 import { JwtPayload } from "./interfaces/jwt-payload.interface";
@@ -113,6 +113,19 @@ export class AuthService extends PrismaClient implements OnModuleInit {
         user: rest,
         token: await this.signJWT(rest),
       };
+    } catch (error) {
+      throw new RpcException({
+        status: 400,
+        message: error.message,
+      });
+    }
+  }
+
+  async deleteUser({ email }: DeleteUserDto) {
+    try {
+      return this.user.delete({
+        where: { email },
+      });
     } catch (error) {
       throw new RpcException({
         status: 400,

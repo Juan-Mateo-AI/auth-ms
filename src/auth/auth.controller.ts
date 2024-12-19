@@ -1,7 +1,7 @@
 import { Controller } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { MessagePattern, Payload } from "@nestjs/microservices";
-import { LoginUserDto, RegisterUserDto } from "./dto";
+import { DeleteUserDto, LoginUserDto, RegisterUserDto } from "./dto";
 
 @Controller()
 export class AuthController {
@@ -20,5 +20,10 @@ export class AuthController {
   @MessagePattern("auth.verify.user")
   verifyToken(@Payload() payload: any) {
     return this.authService.verifyToken(payload.token || payload);
+  }
+
+  @MessagePattern("auth.verify.user")
+  deleteUser(@Payload() { email }: DeleteUserDto) {
+    return this.authService.deleteUser({ email });
   }
 }
