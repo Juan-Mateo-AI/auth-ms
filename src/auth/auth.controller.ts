@@ -22,7 +22,7 @@ export class AuthController {
     return this.authService.verifyToken(payload.token || payload);
   }
 
-  @MessagePattern("auth.verify.user")
+  @MessagePattern("auth.delete.user")
   deleteUser(@Payload() { email }: DeleteUserDto) {
     return this.authService.deleteUser({ email });
   }
