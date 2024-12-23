@@ -1,4 +1,4 @@
-import { Injectable, Logger, OnModuleInit } from "@nestjs/common";
+import { HttpStatus, Injectable, Logger, OnModuleInit } from "@nestjs/common";
 import { RpcException } from "@nestjs/microservices";
 import { PrismaClient } from "@prisma/client";
 
@@ -38,7 +38,7 @@ export class AuthService extends PrismaClient implements OnModuleInit {
       };
     } catch (error) {
       throw new RpcException({
-        status: 401,
+        status: HttpStatus.UNAUTHORIZED,
         message: "Invalid token",
       });
     }
@@ -56,7 +56,7 @@ export class AuthService extends PrismaClient implements OnModuleInit {
 
       if (user) {
         throw new RpcException({
-          status: 400,
+          status: HttpStatus.BAD_REQUEST,
           message: "User already exists",
         });
       }
@@ -77,7 +77,7 @@ export class AuthService extends PrismaClient implements OnModuleInit {
       };
     } catch (error) {
       throw new RpcException({
-        status: 400,
+        status: HttpStatus.BAD_REQUEST,
         message: error.message,
       });
     }
@@ -93,7 +93,7 @@ export class AuthService extends PrismaClient implements OnModuleInit {
 
       if (!user) {
         throw new RpcException({
-          status: 400,
+          status: HttpStatus.BAD_REQUEST,
           message: "User/Password not valid",
         });
       }
@@ -102,7 +102,7 @@ export class AuthService extends PrismaClient implements OnModuleInit {
 
       if (!isPasswordValid) {
         throw new RpcException({
-          status: 400,
+          status: HttpStatus.BAD_REQUEST,
           message: "User/Password not valid",
         });
       }
@@ -115,7 +115,7 @@ export class AuthService extends PrismaClient implements OnModuleInit {
       };
     } catch (error) {
       throw new RpcException({
-        status: 400,
+        status: HttpStatus.BAD_REQUEST,
         message: error.message,
       });
     }
@@ -128,7 +128,7 @@ export class AuthService extends PrismaClient implements OnModuleInit {
       });
     } catch (error) {
       throw new RpcException({
-        status: 400,
+        status: HttpStatus.BAD_REQUEST,
         message: error.message,
       });
     }
