@@ -133,4 +133,17 @@ export class AuthService extends PrismaClient implements OnModuleInit {
       });
     }
   }
+
+  async getUser(email: string) {
+    return this.user.findUnique({
+      where: { email },
+    });
+  }
+
+  async forgotPassword(email: string, password: string) {
+    return this.user.update({
+      where: { email },
+      data: { password: await argon2.hash(password) },
+    });
+  }
 }
